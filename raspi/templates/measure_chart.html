@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>实时检测</title>
+    <script src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/echarts.min.js"></script>
+
+</head>
+<body>
+<center>
+    <button id="stop_btn">点我停止检测</button>
+    <div id="bar" style="width:1000px; height:600px;"></div>
+    <script>
+        var idx = 0;
+        var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+        var old_temperature = [];
+        var old_humidity = [];
+        var stop = false;
+        $(
+            function () {
+                fetchData(chart);
+                timer = setInterval(getDynamicData, {{ timer_delay }});
+            }
+        );
+
+        function fetchData() {
+            $.ajax({
+                type: "GET",
+                url: "./lineChart",
+                dataType: "json",
+                success: function (result) {
+                    chart.setOption(result);
+                    old_temperature = chart.getOption().series[0].data;
+                    old_humidity = chart.getOption().series[1].data;
+                }
+            });
+        }
+
+        function getDynamicData() {
+            $.ajax({
+                type: "GET",
+                url: "./lineDynamicData",
+                dataType: "json",
+                success: function (result) {
+                    old_temperature.push([idx, result.temperature]);
+                    old_humidity.push([idx, result.humidity]);
+                    chart.setOption({
+                        series: [{data: old_temperature}, {data: old_humidity}]
+                    });
+                    idx++;
+                }
+            });
+        }
+
+        function stop_render() {
+            if (stop === false) {
+                clearInterval(timer);
+                document.getElementById("stop_btn").innerHTML = "点我继续检测";
+                stop = true;
+            } else {
+                timer = setInterval(getDynamicData, {{ timer_delay }});
+                document.getElementById("stop_btn").innerHTML = "点我停止检测";
+                stop = false;
+            }
+        }
+
+        let stop_btn = $('#stop_btn');
+        stop_btn.click(stop_render);
+    </script>
+</center>
+</body>
+</html>

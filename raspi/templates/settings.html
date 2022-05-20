@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>设置</title>
+    <style>
+
+        .f5 {
+            z-index: 9;
+            width: 100%;
+        }
+
+    </style>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div style="text-align: center;">
+    <h1>设置</h1>
+
+    <form id="Settings" name="Settings" action="/saveConfig" method="post">
+
+        <p>识别模型&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<select name="recognition_model" id="recognition_model">
+            <option value="{{ settings_data['recognition_model'] }}">{{ settings_data['recognition_model'] }}</option>
+            <option value="facial.xml">facial.xml</option>
+            <option value="fullbody.xml">fullbody.xml</option>
+            <option value="upperbody.xml">upperbody.xml</option>
+        </select></p>
+
+        <p>测量延迟&emsp;&emsp;&emsp;<input type="text" class="form-control" id="dynamic_chart_timer_delay"
+                                        name="dynamic_chart_timer_delay"
+                                        placeholder="{{ settings_data['dynamic_chart_timer_delay'] }}"
+                                        value="{{ settings_data['dynamic_chart_timer_delay'] }}"></p>
+        <p>监测延迟&emsp;&emsp;&emsp;<input type="text" class="form-control" id="ht_measure_delay"
+                                        name="ht_measure_delay"
+                                        placeholder="{{ settings_data['ht_measure_delay'] }}"
+                                        value="{{ settings_data['ht_measure_delay'] }}"></p>
+        <p>按键延迟&emsp;&emsp;&emsp;<input type="text" class="form-control" id="button_delay"
+                                        name="button_delay"
+                                        placeholder="{{ settings_data['button_delay'] }}"
+                                        value="{{ settings_data['button_delay'] }}"></p>
+        <p>按键间隔&emsp;&emsp;&emsp;<input type="text" class="form-control" id="button_response"
+                                        name="button_response"
+                                        placeholder="{{ settings_data['button_response'] }}"
+                                        value="{{ settings_data['button_response'] }}"></p>
+
+        <p>按键间隔&emsp;&emsp;&emsp;<input type="text" class="form-control" id="recognition_interval"
+                                        name="recognition_interval"
+                                        placeholder="{{ settings_data['recognition_interval'] }}"
+                                        value="{{ settings_data['recognition_interval'] }}"></p>
+
+        <p>命令提示&emsp;&emsp;&emsp;<input type="text" class="form-control" id="operate_espeak"
+                                        name="operate_espeak"
+                                        placeholder="{{ settings_data['operate_espeak'] }}"
+                                        value="{{ settings_data['operate_espeak'] }}"></p>
+
+        <p>注：时间单位为毫秒</p>
+        <button type="submit" class="f5">保存</button>
+        <br/><br/>
+    </form>
+    <br/>
+    <button class="moreButton" onclick="display('moreSettings')">更多设置</button>
+    <br/>
+    <div style="display:none" id="moreSettings">
+        <a href="/wlan.html"><br/>
+            <button class="f5">无线网络设置</button>
+            <br/></a><br/>
+        <a href="/reboot">
+            <button class="f5" id="reboot">应用重启</button>
+            <br/></a><br/>
+        <a href="/reset">
+            <button class="f5" id="reset">初始化应用</button>
+            <br/></a><br/>
+        <a href="/ip">
+            <button class="f5">IP信息</button>
+            <br/></a><br/>
+        <a href="/shell.html">
+            <button class="f5">WebShell</button>
+            <br/></a><br/>
+    </div>
+    <br/><br/>
+
+    <a href="/index.html">
+        <button class="f5">返回首页</button>
+        <br/></a><br/>
+</div>
+<script>
+    function display(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none") {
+            x.style.display = "";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    $(function () {
+        $('#reboot').click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/reboot"
+            });
+        });
+        $('#reset').click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/reboot"
+            });
+        });
+    });
+</script>
+</body>
+</html>

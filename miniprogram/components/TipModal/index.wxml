@@ -1,0 +1,11 @@
+<!--miniprogram/components/TipModal/index.wxml-->
+<view class="install_tip" wx:if="{{showUploadTip}}">
+  <view class="install_tip_back"></view>
+  <view class="install_tip_detail">
+    <view class="install_tip_detail_title">执行失败</view>
+    <view class="install_tip_detail_tip">执行失败</view>
+    <view class="install_tip_detail_shell">
+      <view bindtap="onChangeShowUploadTip" class="install_tip_detail_button">确定</view>
+    </view>
+  </view>
+</view>

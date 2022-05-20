@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>语音识别</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<center>
+    <form id="asr" name="asr" action="/ASRun" method="post">
+        <p>识别时间&emsp;&emsp;<select name="record_time" id="record_time">
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="30">30</option>
+        </select></p>
+        <button type="submit" id="send" class="send">开始录音并识别</button>
+    </form>
+    <p><br/></p>
+</center>
+<p style="white-space: pre-line;"><span id="result">{{ last_result }}</span></p>
+<script>
+    var count = 0;
+    $(function () {
+        $("#asr").submit(function () {
+            $.ajax({
+                type: "POST",
+                url: "/ASRun",
+                data: $("#asr").serialize(),
+                success: function (data) {
+                }
+            });
+            timer = setInterval(getResult, 1234);
+            document.getElementById("asr").style.display = "none";
+            count = 0;
+            $("#result").html("");
+            return false;
+        });
+    });
+
+    function display(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none") {
+            x.style.display = "";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function getResult() {
+        $.ajax({
+            url: "/ASRun",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                if (data.status === 0) {
+                    $("#result").html("识别结果：\n\n"+data.result);
+                    clearInterval(timer);
+                    display('asr');
+                } else if (data.status === 1) {
+                    count++;
+                    $("#result").html("识别中..." + count.toString());
+                } else {
+                    $("#result").html("识别失败");
+                    clearInterval(timer);
+                    display('asr');
+                }
+            },
+            error: function () {
+                $("#result").html("识别失败");
+                clearInterval(timer);
+                display('asr');
+            }
+        });
+    }
+</script>
+</body>
+</html>

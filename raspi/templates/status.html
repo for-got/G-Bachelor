@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>状态控制</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body id="body" onload="display()">
+<center>
+    <h1>状态信息及控制</h1>
+
+    <p>播放状态：&emsp;&emsp;<button id="audio" class="send"></button>
+    </p>
+    <p>测量状态：&emsp;&emsp;<button id="measure" class="send"></button>
+    </p>
+    <p>目标检测：&emsp;&emsp;<button id="camera" class="send"></button>
+    </p>
+    <p>继电器状态：&emsp;&emsp;<button id="relay" class="send"></button>
+    </p>
+    <p>环境温度：&emsp;&emsp;<span id="temperature" class="send"></span>
+    </p>
+    <p>环境湿度：&emsp;&emsp;<span id="humidity" class="send"></span>
+    </p>
+    <p>目标温度：&emsp;&emsp;<span id="obj_t" class="send"></span>
+    </p>
+
+    <p><br/></p>
+    <br/><br/>
+
+    <a href="/index.html">
+        <button style="width: 100%">返回首页</button>
+        <br/></a><br/>
+</center>
+<script>
+    function display() {
+        $.ajax({
+            url: '/api_info',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data.status.audio === true) {
+                    $('#audio').text('播放中');
+                    $('#audio').css('background-color', 'green');
+                } else {
+                    $('#audio').text('已停止');
+                    $('#audio').css('background-color', 'red');
+                }
+                if (data.status.measure === true) {
+                    $('#measure').text('测量中');
+                    $('#measure').css('background-color', 'green');
+                } else {
+                    $('#measure').text('已停止');
+                    $('#measure').css('background-color', 'red');
+                }
+                if (data.status.camera === true) {
+                    $('#camera').text('检测中');
+                    $('#camera').css('background-color', 'green');
+                } else {
+                    $('#camera').text('已停止');
+                    $('#camera').css('background-color', 'red');
+                }
+                if (data.status.relay === false) {
+                    $('#relay').text('开启');
+                    $('#relay').css('background-color', 'green');
+                } else {
+                    $('#relay').text('关闭');
+                    $('#relay').css('background-color', 'red');
+                }
+                if (data.res.temperature !== "") {
+                    $('#temperature').text(data.res.temperature + "℃");
+                }
+                if (data.res.humidity !== "") {
+                    $('#humidity').text(data.res.humidity + "%");
+                }
+                if (data.res.obj_t !== "") {
+                    $('#obj_t').text(data.res.obj_t + "℃");
+                }
+            }
+        });
+    }
+
+    $(function () {
+        $('#audio').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/change_status",
+                data: {
+                    'audio': true
+                },
+                success: function () {
+                    display();
+
+                }
+            });
+            return false;
+        });
+        $('#measure').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/change_status",
+                data: {
+                    'measure': true
+                },
+                success: function () {
+                    display();
+                }
+            });
+            return false;
+        });
+        $('#camera').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/change_status",
+                data: {
+                    'camera': true
+                },
+                success: function () {
+                    display();
+                }
+            });
+            return false;
+        });
+        $('#relay').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/change_status",
+                data: {
+                    'relay': true
+                },
+                success: function () {
+                    display();
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>

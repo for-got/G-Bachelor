@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="/static/js/jquery.min.js"></script>
+    <title>多用途智能系统</title>
+    <style>
+        .btn_li {
+            z-index: 9;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+<center>
+    <h1>多用途智能系统</h1>
+    {{ info|safe }}
+
+
+    <a href="/camera.html">
+        <button class="btn_li">相机</button>
+        <br/></a><br/>
+    <a href="/measure_chart.html">
+        <button class="btn_li">实时温湿度</button>
+        <br/></a><br/>
+    <a href="/history">
+        <button class="btn_li">历史温湿度</button>
+        <br/></a><br/>
+    <a href="/asr.html">
+        <button class="btn_li">语音识别</button>
+        <br/></a><br/>
+    <a href="/tts.html">
+        <button class="btn_li">语音合成</button>
+        <br/></a><br/>
+    <a href="/music.html">
+        <button class="btn_li">音频播放</button>
+        <br/></a><br/>
+    <a href="/status.html">
+        <button class="btn_li">状态控制</button>
+        <br/></a><br/><br/>
+
+    <a href="/settings.html">
+        <button class="btn_li">设&emsp;&emsp;置</button>
+        <br/></a><br/>
+    <a href="{{ local_addr }}">
+        <button class="btn_li">本地模式</button>
+        <br/></a><br/><br/>
+
+
+</center>
+
+</body>
+
+</html>

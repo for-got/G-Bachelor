@@ -1,0 +1,40 @@
+<html>
+<head>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>相机</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<center>
+    <h1>视频预览</h1>
+    <p>目标温度：<span id="t"></span></p>
+    <img id="bg" src="{{ url_for('video_feed') }}">
+    <p><br/></p><a href="/camera_res.html">
+    <button class="btn_li">识别记录</button>
+    <br/></a><br/>
+</center>
+<script>
+    $(
+        function () {
+            timer = setInterval(getTemperature, {{ delay * 2 }});
+        }
+    );
+
+    function getTemperature() {
+        $.ajax({
+            type: "GET",
+            url: "/object_temperature",
+            data: $("#t").serialize(),
+            success: function (data) {
+                document.getElementById("t").innerHTML = data.temperature;
+            },
+            error: function (data) {
+                document.getElementById("t").innerHTML = "Error";
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>设置</title>
+    <style>
+        .f5 {
+            z-index: 9;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align: center;">
+    <h1>添加无线网络</h1>
+
+    <form id="addWlan" name="addWlan" action="/addWLAN" method="post">
+
+        <p>网络&emsp;&emsp;&emsp;<select name="ssid" id="ssid">
+            <option value="">请选择一个无线网络</option>
+            {{ ssids | safe }}</select></p>
+
+        <p>密码&emsp;&emsp;<input type="text" class="password" id="password" name="password" placeholder="" value=""></p>
+        <button type="submit" class="f5">保存</button>
+        <br/><br/>
+    </form>
+    <br/><br/>
+    <a href="/index.html">
+        <button class="f5">返回首页</button>
+        <br/></a><br/>
+</div>
+</body>
+</html>

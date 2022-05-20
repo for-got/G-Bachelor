@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/Camera/index",
+    "pages/empty/index",
+    "pages/getOpenId/index",
+    "pages/History/index",
+    "pages/imgResult/index",
+    "pages/Realtime/index",
+    "pages/updateRecord/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#eee",
+    "navigationBarBackgroundColor": "#eee",
+    "navigationBarTitleText": "多用途智能系统",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

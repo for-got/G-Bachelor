@@ -1,0 +1,18 @@
+<!--&lt;!&ndash;index.wxml&ndash;&gt;-->
+<!--<view class="container">-->
+
+<!--    <view class="power" wx:key="title" wx:for="{{powerList}}" wx:for-item="power">-->
+<!--        <view class="power_info" data-index="{{index}}" bindtap="onClickPowerInfo">-->
+<!--            <view class="power_info_text">-->
+<!--                <view class="power_info_text_title">{{power.title}}</view>-->
+<!--                <view class="power_info_text_tip">{{power.tip}}</view>-->
+<!--            </view>-->
+<!--        </view>-->
+<!--    </view>-->
+
+
+<!--    <cloud-tip-modal showUploadTipProps="{{showUploadTip}}"></cloud-tip-modal>-->
+
+<!--</view>-->
+
+<web-view src="https://graduation.for-get.com"> </web-view>

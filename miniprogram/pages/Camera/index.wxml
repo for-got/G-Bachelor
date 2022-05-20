@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="container">
+<image src="https://graduation.for-get.com/video_feed" class="image" />
+</view>

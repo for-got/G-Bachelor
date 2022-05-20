@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>音乐播放</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<center>
+    <form id="music" name="music">
+
+        <p>播放连接：<input type="text" class="form-control" id="music_path" name="music_path" placeholder="demo"
+                       value="demo"/></p>
+
+        <button type="submit" id="send" class="send" style="width: 100%">播放</button>
+
+    </form>
+    <br/>
+    <button id="stop" style="width: 100%">停止</button>
+    <p><br/></p>
+    <br/><br/>
+
+    <a href="/index.html">
+        <button style="width: 100%">返回首页</button>
+        <br/></a><br/>
+    <script>
+        $(function () {
+            $("#music").submit(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/play_music",
+                    data: $("#music").serialize(),
+                });
+                return false;
+            });
+            $('#stop').click(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/stop_music"
+                });
+            });
+        });
+    </script>
+</center>
+</body>
+</html>
